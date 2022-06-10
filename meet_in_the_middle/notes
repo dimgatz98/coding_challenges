@@ -1,0 +1,17 @@
+*You can use meet in the middle if you can solve the problem for n/2
+
+Problem1-easy:
+Given N<=40 numbers, find a subset summing up to exactly S (Variation of knapsack). 
+a[i],S<=10^9. 
+
+if N = 20 you can solve the problem with brute force because 2^20 is not as big so what we can do is meet in the middle meaning that we can split the 40 numbers in halves, solve the problem for each half and then combine them in some way. In this case, by brute forcing the first half, we know in each iteration how much should be the sum of the second half in order to solve the problem and thus after solving for the first half we can hold the sums in a sorted vector and then while solving for the second half check if the corresponding sum is in the vector which gives a complexity of O(2^20*log(10^9) ) =9437184. If instead of vector we use unordered_set (cpp) we get time complexity of just O(2^20).
+
+Problem-2:
+Count subsequences of length K (no need to be contiguous).
+
+If k for example is 3 then we talk about tuples (i,j,k). So what we will do is consider all elements as potential j elements and then while iterating over our array count how many possible i<j are on the left hand side of j and how many k>j are on the right hand side of j and then just multiple them to get the result which gives a complexity of o(n*n) where n is the length of the whole sequence.
+In general, when we have K the complexity of brute force is n^K and meet in the middle gives n^K/2.
+
+
+**You can also solve the previous problems using dp.
+
