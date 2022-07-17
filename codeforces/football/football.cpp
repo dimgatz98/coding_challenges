@@ -42,18 +42,15 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define all(a) (a).begin(), (a).end()
 #define reset(a,b) memset(a,b,sizeof(a))
 #define pb push_back
-#define foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
+#define Foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 #define For(i, j) FOR(i, 0, j, 1)
 #define Rfor(i, j) RFOR(i, j, 0, 1)
-#define X first
-#define Y second
 
 
 typedef pair<int,int> pii;
 typedef vector<int> vi;
-typedef vector<ll> vll;
 typedef map<int,int> mpii;
 typedef set<int> seti;
 
@@ -64,17 +61,38 @@ const ll INF = 1e9;
 const ld EPS = 1e-9;
 
 
-void solve() {
-
+void solve(string s) {
+    int counter = 0;
+    char prev = '2';
+    for (auto x: s) {
+        if (prev == '2') {
+            prev = x;
+            counter++;
+            continue;
+        }
+        if (x == prev) {
+            counter++;
+        }
+        else {
+            counter = 1;
+            prev = x;
+        }
+        if (counter == 7) {
+            cout << "YES" << endl;
+            return;
+        }
+    }
+    cout << "NO" << endl;
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     int tc = 1;
+    string s;
     // cin >> tc;
     for (int t = 1; t <= tc; t++) {
-        // cout << "Case #" << t << ": ";
-        solve();
+        cin >> s;
+        solve(s);
     }
 }

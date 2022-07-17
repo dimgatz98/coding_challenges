@@ -42,13 +42,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define all(a) (a).begin(), (a).end()
 #define reset(a,b) memset(a,b,sizeof(a))
 #define pb push_back
-#define foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
+#define Foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 #define For(i, j) FOR(i, 0, j, 1)
 #define Rfor(i, j) RFOR(i, j, 0, 1)
-#define X first
-#define Y second
 
 
 typedef pair<int,int> pii;
@@ -68,13 +66,81 @@ void solve() {
 
 }
 
+// Singly-linked lists are already defined with this interface:
+template<typename T>
+struct ListNode {
+  ListNode(const T &v) : value(v), next(nullptr) {}
+  T value;
+  ListNode *next;
+};
+
+
+void printList(ListNode<int> * l) {
+    ListNode <int> * tmp = l;
+    while (tmp != nullptr) {
+        cout << tmp->value << " ";
+        tmp = tmp->next;
+    }
+    cout << endl;
+}
+
+ListNode<int> * addElement(ListNode<int> *l, int n) {
+    if (l == nullptr) {
+        return new ListNode <int> (n);
+    }
+    ListNode <int> * curr = l;
+    while (curr->next != nullptr) {
+        curr = curr->next;
+    }
+
+    curr->next = new ListNode <int> (n);
+    return l;
+}
+
+ListNode<int> * solution(ListNode<int> * l1, ListNode<int> * l2) {
+    ListNode<int> * res = nullptr;
+
+    while (l1 != nullptr || l2 != nullptr) {
+        if ((l1 != nullptr ? l1->value : MOD) < (l2 != nullptr ? l2->value : MOD)) {
+            res = addElement(res, l1->value);
+            l1 = l1->next;
+        } else {
+            res = addElement(res, l2->value);
+            l2 = l2->next;
+        }
+    }
+
+    return res;
+}
+
+
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int tc = 1;
+    int tc = 1, n, tmp;
     // cin >> tc;
     for (int t = 1; t <= tc; t++) {
-        // cout << "Case #" << t << ": ";
-        solve();
+        ListNode<int> *l1 = nullptr, *l2 = nullptr;
+        cin >> n;
+        while (n > 0) {
+            cin >> tmp;
+            l1 = addElement (l1, tmp);
+            n--;
+        }
+
+        cin >> n;
+        while (n > 0) {
+            cin >> tmp;
+            l2 = addElement (l2, tmp);
+            n--;
+        }
+
+        // cout << "HELLO WORLD" << endl;
+
+        // printList(l1);
+        // printList(l2);
+
+        ListNode<int> *res = solution(l1, l2);
+        printList(res);
     }
 }

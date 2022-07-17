@@ -42,39 +42,102 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define all(a) (a).begin(), (a).end()
 #define reset(a,b) memset(a,b,sizeof(a))
 #define pb push_back
-#define foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
+#define Foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 #define For(i, j) FOR(i, 0, j, 1)
 #define Rfor(i, j) RFOR(i, j, 0, 1)
-#define X first
-#define Y second
 
 
 typedef pair<int,int> pii;
 typedef vector<int> vi;
-typedef vector<ll> vll;
 typedef map<int,int> mpii;
 typedef set<int> seti;
 
 
 const int MAX_N = 1e5 + 5;
-const ll MOD = 1e9 + 7;
+const ll MOD = 1e10 + 7;
 const ll INF = 1e9;
 const ld EPS = 1e-9;
 
-
-void solve() {
-
+template <typename T>
+void print_vect (vector<T> v) {
+    for (auto x: v) {
+        cout << x << " ";
+    }
+    cout << endl;
 }
 
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    int tc = 1;
-    // cin >> tc;
-    for (int t = 1; t <= tc; t++) {
-        // cout << "Case #" << t << ": ";
-        solve();
+int memo[20];
+
+long long stepPerms(int n) {
+    if (n == 1) {
+        return 1;
     }
+    if (n == 2) {
+        return 2;
+    }
+    if (n == 3) {
+        return 4;
+    }
+
+    if (memo[n - 1] == 0) {
+        memo[n - 1] = stepPerms(n - 1) % MOD;
+    }
+
+    if (memo[n - 2] == 0) {
+        memo[n - 2] = stepPerms(n - 2) % MOD;
+    }
+
+    if (memo[n - 3] == 0) {
+        memo[n - 3] = stepPerms(n - 3) % MOD;
+    }
+
+    return (memo[n - 1] % MOD + memo[n - 2] % MOD + memo[n-3] % MOD) % MOD;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
+
+
+int main()
+{
+    string s_temp;
+    getline(cin, s_temp);
+
+    int s = stoi(ltrim(rtrim(s_temp)));
+
+    for (int s_itr = 0; s_itr < s; s_itr++) {
+        string n_temp;
+        getline(cin, n_temp);
+
+        int n = stoi(ltrim(rtrim(n_temp)));
+
+        memset(memo, 0, sizeof(memo));
+
+        int res = stepPerms(n);
+
+        cout << res << "\n";
+    }
+
+    return 0;
 }

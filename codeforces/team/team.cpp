@@ -42,13 +42,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define all(a) (a).begin(), (a).end()
 #define reset(a,b) memset(a,b,sizeof(a))
 #define pb push_back
-#define foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
+#define Foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 #define For(i, j) FOR(i, 0, j, 1)
 #define Rfor(i, j) RFOR(i, j, 0, 1)
-#define X first
-#define Y second
 
 
 typedef pair<int,int> pii;
@@ -64,17 +62,20 @@ const ll INF = 1e9;
 const ld EPS = 1e-9;
 
 
-void solve() {
-
+bool solve(int x, int y, int z) {
+    return ((x + y + z) >= 2);
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int tc = 1;
-    // cin >> tc;
+    int tc = 1, x, y, z, counter = 0;
+    cin >> tc;
     for (int t = 1; t <= tc; t++) {
-        // cout << "Case #" << t << ": ";
-        solve();
+        cin >> x >> y >> z;
+        if (solve(x, y, z)) {
+            counter++;
+        }
     }
+    cout << counter << endl;
 }

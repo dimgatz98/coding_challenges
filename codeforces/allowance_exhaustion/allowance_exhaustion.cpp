@@ -42,13 +42,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define all(a) (a).begin(), (a).end()
 #define reset(a,b) memset(a,b,sizeof(a))
 #define pb push_back
-#define foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
+#define Foreach(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 #define For(i, j) FOR(i, 0, j, 1)
 #define Rfor(i, j) RFOR(i, j, 0, 1)
-#define X first
-#define Y second
 
 
 typedef pair<int,int> pii;
@@ -63,18 +61,49 @@ const ll MOD = 1e9 + 7;
 const ll INF = 1e9;
 const ld EPS = 1e-9;
 
+void solve(vector<vector<pair<int, long long>>> g, int s, ll T) {
+    ll res = -1;
+    list<vll> queue;
+    vll curr = {s, 0, 0};
+    queue.push_back(curr);
 
-void solve() {
+    while(!queue.empty())
+    {
+        curr = queue.front();
+        queue.pop_front();
 
+        for (auto adjacent: g[curr[0]]){
+            if (curr[1] > T) {
+                break;
+            }
+            if (curr[0] == s && curr[1] == T && curr[2] > res) {
+                res = curr[2];
+            }
+            queue.push_back(
+                {
+                    adjacent.first,
+                    curr[1] + 1,
+                    curr[2] + adjacent.second
+                }
+            );
+        }
+    }
+    cout << res << endl;
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int tc = 1;
-    // cin >> tc;
+    int tc = 1, N, M, x, y;
+    ll T, w;
     for (int t = 1; t <= tc; t++) {
-        // cout << "Case #" << t << ": ";
-        solve();
+        cin >> N >> M >> T;
+        vector<vector<pair<int, ll>>> g(N);
+        For(i, M) {
+            cin >> x >> y >> w;
+            g[x - 1].push_back({y - 1, w});
+            g[y - 1].push_back({x - 1, w});
+        }
+        solve(g, 0, T);
     }
 }
