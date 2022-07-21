@@ -1,0 +1,4 @@
+1.23.256..
+EDOF
+cat <<EOF > test_case.txt
+1.23.256.255.
