@@ -62,22 +62,21 @@ const ll INF = 1e9;
 const ld EPS = 1e-9;
 
 
-bool solution(string inputString) {
-    vector<int> v(26);
-
-    for (auto c: inputString) {
-        v[c - 'a']++;
-    }
-
-    int prev = v[0];
-    for (auto i: v) {
-        if (i > prev) {
-            return false;
+int solution(string commands) {
+    int count = 0, res = 0;
+    for (auto c: commands) {
+        if (c != 'A') {
+            count++;
+            if (count  % 2 == 0) {
+                res++;
+            }
+            continue;
         }
-        prev = i;
+        if (count % 2 == 0) {
+            res++;
+        }
     }
-
-    return true;
+    return res;
 }
 
 
@@ -85,10 +84,11 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     int tc = 1;
-    string s;
-    cin >> s;
+    string commands;
+    cin >> commands;
+    // cin >> tc;
     for (int t = 1; t <= tc; t++) {
         // cout << "Case #" << t << ": ";
-        cout << (solution (s) ? "true" : "false") << endl;
+        cout << solution (commands) << endl;
     }
 }

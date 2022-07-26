@@ -62,33 +62,41 @@ const ll INF = 1e9;
 const ld EPS = 1e-9;
 
 
-bool solution(string inputString) {
-    vector<int> v(26);
+int solution(int param1, int param2) {
+    string p1 = to_string(param1), p2 = to_string(param2);
+    reverse(p1.begin(), p1.end());
+    reverse(p2.begin(), p2.end());
 
-    for (auto c: inputString) {
-        v[c - 'a']++;
-    }
-
-    int prev = v[0];
-    for (auto i: v) {
-        if (i > prev) {
-            return false;
+    string res = "";
+    for(int i = 0 ; i < max(p1.size(), p2.size()) ; i++) {
+        if (i > min(p1.size(), p2.size()) - 1) {
+            if (max(p1.size(), p2.size()) == p1.size()){
+                res.push_back(p1[i]);
+                continue;
+            }
+            res.push_back(p2[i]);
+            continue;
         }
-        prev = i;
+
+        if (p1[i] - '0' + p2[i] - '0' >= 10) {
+            res.push_back((int) ((p1[i] - '0' + p2[i] - '0') - 10) + '0');
+        } else {
+            res.push_back((p1[i] - '0' + p2[i] - '0') + '0');
+        }
     }
 
-    return true;
+    reverse(res.begin(), res.end());
+    return stoi(res);
 }
-
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int tc = 1;
-    string s;
-    cin >> s;
+    int tc = 1, param1, param2;
+    cin >> param1 >> param2;
+    // cin >> tc;
     for (int t = 1; t <= tc; t++) {
         // cout << "Case #" << t << ": ";
-        cout << (solution (s) ? "true" : "false") << endl;
+        cout << solution (param1, param2) << endl;
     }
 }
